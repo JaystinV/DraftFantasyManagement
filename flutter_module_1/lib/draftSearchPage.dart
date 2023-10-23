@@ -10,6 +10,7 @@ class DraftSearchPage extends StatefulWidget {
 
 class _DraftSearchPageState extends State<DraftSearchPage> {
   int selectedIndex = 0;
+  TextEditingController editingController = TextEditingController();
   List<Widget> bottomNavigation = [
     DraftSearchPage(),
     DraftSessionPage(),
@@ -38,34 +39,82 @@ class _DraftSearchPageState extends State<DraftSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Draft Search'), actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search))
-        ]),
-        body: ListView.builder(
-          itemCount: 8,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(title: Text('Favorite Player $index'));
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          //Displays a navigation bar at the bottom of the screen
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
+        appBar: AppBar(title: const Text('Draft Search')),
+        body: Column(children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: (value) {},
+              controller: editingController,
+              decoration: const InputDecoration(
+                  labelText: "Search",
+                  hintText: "Search",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(25.0)))),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit),
-              label: 'Draft',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            )
-          ],
-          currentIndex: selectedIndex,
-          selectedItemColor: Colors.blueGrey,
-          onTap: onIconTapped,
-        ));
+          ),
+          Expanded(
+              child: ListView.separated(
+                  itemCount: 8,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      onTap: () {
+                        setState(() {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Pick Player?'),
+                              content: Text('Player $index'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                      },
+                      onLongPress: () {
+                        setState(() {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(''),
+                              content: Text('Favorited Player $index'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                      },
+                      title: Text('Favorite Player $index'),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Divider();
+                  })),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            ElevatedButton(
+                onPressed: () {}, child: const Text('Tap To Pick Player')),
+            ElevatedButton(
+                onPressed: () {}, child: const Text('Hold to Favorite'))
+          ])
+        ]));
   }
 }

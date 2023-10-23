@@ -15,35 +15,34 @@ class _SignupPageState extends State<SignupPage> {
           title: const Text('Signup'),
         ),
         body: Center(
-            child: Column(children: <Widget>[
-          const Text(
-            'Email',
-            textAlign: TextAlign.start,
-          ),
-          const TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your email',
-            ),
-          ),
-          const Text('Password', textAlign: TextAlign.start),
-          const TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your password',
-            ),
-          ),
-          const Text('Confirm Password', textAlign: TextAlign.start),
-          const TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter your password',
-            ),
-          ),
-          ElevatedButton(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage())),
-              child: const Text('Sign-Up')),
-        ])));
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+              const Row(children: <Widget>[Text('Email')]),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your email',
+                ),
+              ),
+              const Row(children: <Widget>[Text('Password')]),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your password',
+                ),
+              ),
+              const Row(children: <Widget>[Text('Confirm Passowrd')]),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your password',
+                ),
+              ),
+              ElevatedButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage())),
+                  child: const Text('Sign-Up')),
+            ])));
   }
 }

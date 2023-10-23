@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module_1/draftSearchPage.dart';
-import 'package:flutter_module_1/draftSettingsPage.dart';
 import 'package:flutter_module_1/draftTrade.dart';
+import 'package:flutter_module_1/draftUpdate.dart';
 
 class DraftSessionPage extends StatefulWidget {
   @override
@@ -10,30 +10,28 @@ class DraftSessionPage extends StatefulWidget {
 }
 
 class _DraftSessionPageState extends State<DraftSessionPage> {
-  int selectedIndex = 1;
-  List<Widget> bottomNavigation = [
-    DraftSearchPage(),
-    DraftSessionPage(),
-    DraftSettingsPage()
-  ];
-  void onIconTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-      if (selectedIndex == 1) {
-        //Take out back button later
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DraftSessionPage();
-        }));
-      } else if (selectedIndex == 0) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DraftSearchPage();
-        }));
-      } else if (selectedIndex == 2) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return DraftSettingsPage();
-        }));
-      }
-    });
+  List<Widget> _buildCells(int count) {
+    return List.generate(
+      count,
+      (index) => Container(
+        alignment: Alignment.center,
+        width: 100.0,
+        height: 50.0,
+        color: Colors.white,
+        margin: const EdgeInsets.all(4.0),
+        child: Text("${index + 1}"),
+      ),
+    );
+  }
+
+  List<Widget> _buildRows(int count) {
+    return List.generate(
+      count,
+      (index) => Row(
+        //get number of rounds and multiply by 2
+        children: _buildCells(6 * 2),
+      ),
+    );
   }
 
   @override
@@ -46,35 +44,41 @@ class _DraftSessionPageState extends State<DraftSessionPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const Row(children: <Widget>[
-                Text('Round'),
-                Text('Timer'),
-              ]),
-              Row(children: <Widget>[
-                Column(children: <Widget>[
-                  SizedBox(
-                      height: 200,
-                      width: 115,
-                      child: ListView.builder(
-                          itemCount: 18,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(title: Text('Team Manager $index'));
-                          }))
-                ]),
-                // Column(
-                //   children: <Widget>[
-                //     SizedBox(
-                //         height: 40,
-                //         width: 40,
-                //         child: ListView.builder(
-                //             scrollDirection: Axis.horizontal,
-                //             itemCount: 18,
-                //             itemBuilder: (BuildContext context, int index) {
-                //               return ListTile(title: Text('Player $index'));
-                //             }))
-                //   ],
-                // )
-              ]),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    const Text('Round'),
+                    const Text('Timer'),
+                    ElevatedButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DraftSearchPage())),
+                        child: const Text('Pick Player'))
+                  ]),
+              Expanded(
+                  child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _buildCells(18), //number of team managers
+                    ),
+                    Flexible(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _buildRows(18), //number of team managers
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+              //]),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
@@ -84,30 +88,19 @@ class _DraftSessionPageState extends State<DraftSessionPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => DraftTradePage())),
-                        child: const Text('Trade'))
-                  ])
+                        child: const Text('Trade')),
+                    ElevatedButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DraftUpdate())),
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                        ),
+                        child: const Icon(Icons.edit)),
+                  ]),
             ],
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          //Displays a navigation bar at the bottom of the screen
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.edit),
-              label: 'Draft',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-            )
-          ],
-          currentIndex: selectedIndex,
-          selectedItemColor: Colors.blueGrey,
-          onTap: onIconTapped,
         ));
   }
 }

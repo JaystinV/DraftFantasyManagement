@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_module_1/draftSession.dart';
 
@@ -23,10 +22,17 @@ class _DraftStartPageState extends State<DraftStartPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Column(children: <Widget>[
-              const Row(children: <Widget>[Text('Team Managers Joined')]),
+              const Row(children: <Widget>[Text('Session Tolken')]),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Ki3j7y',
+                ),
+              ),
+              const Row(children: <Widget>[Text('Team Manager Order')]),
               Column(children: <Widget>[
                 SizedBox(
-                    height: 400,
+                    height: 550,
                     child: ListView.builder(
                       itemCount: 16,
                       itemBuilder: (BuildContext context, int index) {
@@ -43,28 +49,14 @@ class _DraftStartPageState extends State<DraftStartPage> {
                     )),
               ]),
             ]),
-            const Row(children: <Widget>[Text('Rounds')]),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Total Rounds',
-              ),
-            ),
-            const Text('Timer'),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Total Time',
-              ),
-            ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => DraftSessionPage()));
-                  SystemChrome.setPreferredOrientations(
-                      [DeviceOrientation.landscapeRight]);
+                  // SystemChrome.setPreferredOrientations(
+                  //     [DeviceOrientation.landscapeRight]);
                 },
                 child: const Text('Start')),
           ],

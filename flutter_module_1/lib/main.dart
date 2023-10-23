@@ -14,9 +14,7 @@ void main() {
   // final connection = PostgreSQLConnection(
   //     'shaped-badger-13180.5xj.cockroachlabs.cloud', 26257, 'defaultdb',
   //     username: 'justinvang_jk_gmail_',
-  //     password: 'pX0U096Ls1KhnSlwRV_QYQ',
-  //     useSSL: true,
-  //     allowClearTextPassword: true);
+  //     password: 'pX0U096Ls1KhnSlwRV_QYQ');
   // await connection.open();
 
   // await connection.transaction((ctx) async {
@@ -98,31 +96,29 @@ class _WelcomePageState extends State<WelcomePage> {
               Container(
                   padding: const EdgeInsets.only(top: 500),
                   child: ElevatedButton(
-                      onPressed: () async {
-                        final connection = PostgreSQLConnection(
-                            'shaped-badger-13180.5xj.cockroachlabs.cloud',
-                            26257,
-                            'defaultdb',
-                            username: 'justinvang_jk_gmail_',
-                            password: 'pX0U096Ls1KhnSlwRV_QYQ',
-                            useSSL: true,
-                            allowClearTextPassword: true);
-                        await connection.open();
-                        await connection.transaction((ctx) async {
-                          await ctx.query("""
-                            INSERT INTO public.tester (a, b)
-                            VALUES 4, 5;
-                          """);
-                          var result =
-                              await ctx.query("SELECT b FROM public.tester");
-                          print(result);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                        });
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+                        // final connection = PostgreSQLConnection(
+                        //     'shaped-badger-13180.5xj.cockroachlabs.cloud',
+                        //     26257,
+                        //     'defaultdb',
+                        //     username: 'justinvang_jk_gmail_',
+                        //     password: 'pX0U096Ls1KhnSlwRV_QYQ');
+                        // await connection.open();
+                        // await connection.transaction((ctx) async {
+                        //   await ctx.query("""
+                        //     INSERT INTO tester (a, b)
+                        //     VALUES 4, 5;
+                        //   """);
+                        //   var result =
+                        //       await ctx.query("SELECT b FROM public.tester");
+                        //print(result);
                         SystemChrome.setPreferredOrientations(
                             [DeviceOrientation.portraitUp]);
+                        //});
                       },
                       child: Text('Login',
                           style: GoogleFonts.roboto(

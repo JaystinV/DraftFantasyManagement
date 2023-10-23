@@ -1,10 +1,12 @@
 //This has the drafts the user is in, as well as a draft join or draft create
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_module_1/draftStart.dart';
+import 'package:flutter_module_1/draftSummary.dart';
 import 'package:flutter_module_1/profilePage.dart';
 import 'package:flutter_module_1/searchPlayersPage.dart';
+import 'package:flutter_module_1/teamStatisticsPage.dart';
 //import 'package:go_router/go_router.dart';
-import 'teamStatisticsPage.dart';
 import 'draftJoin.dart';
 import 'draftSetUp.dart';
 
@@ -15,27 +17,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 1;
-  List<Widget> bottomNavigation = [
-    SearchPlayersPage(),
-    HomePage(),
-    const TeamStatisticPage()
-  ];
+  List<Widget> bottomNavigation = [HomePage(), SearchPlayersPage()];
   void onIconTapped(int index) {
     setState(() {
       selectedIndex = index;
-      if (selectedIndex == 1) {
+      if (selectedIndex == 0) {
         //Take out back button later
         //context.go('home');
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomePage();
         }));
-      } else if (selectedIndex == 0) {
+      } else if (selectedIndex == 1) {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return SearchPlayersPage();
-        }));
-      } else if (selectedIndex == 2) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return TeamStatisticPage();
         }));
       }
     });
@@ -60,7 +54,36 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                     itemCount: 16,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(title: Text('League $index'));
+                      return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            ElevatedButton(
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const DraftStartPage())),
+                                child: Text('League $index')),
+                            ElevatedButton(
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DraftSummaryPage())),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                ),
+                                child: const Icon(Icons.question_mark)),
+                            ElevatedButton(
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TeamStatisticPage())),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                ),
+                                child: const Icon(Icons.person)),
+                          ]);
                     }),
               ),
               Row(
@@ -86,16 +109,12 @@ class _HomePageState extends State<HomePage> {
           //Displays a navigation bar at the bottom of the screen
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Teams',
+              icon: Icon(Icons.search),
+              label: 'Search',
             )
           ],
           currentIndex: selectedIndex,

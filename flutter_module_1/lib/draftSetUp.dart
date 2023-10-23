@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_module_1/draftStart.dart';
+import 'package:flutter_module_1/homePage.dart';
 
 class DraftSetUp extends StatefulWidget {
   @override
@@ -25,16 +25,30 @@ class _DraftSetUpState extends State<DraftSetUp> {
                 hintText: 'Leauge Name',
               ),
             ),
-            const Row(children: <Widget>[Text('Session Tolken')]),
+            const Row(children: <Widget>[Text('Session Key')]),
             const TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Ki3j7y',
               ),
             ),
+            const Row(children: <Widget>[Text('Rounds')]),
+            const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Total Rounds',
+              ),
+            ),
+            const Text('Timer'),
+            const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Total Time',
+              ),
+            ),
             ElevatedButton(
                 onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const DraftStartPage())),
+                    MaterialPageRoute(builder: (context) => HomePage())),
                 child: const Text('Create')),
           ],
         ),
