@@ -12,7 +12,7 @@ class _DraftJoinState extends State<DraftJoin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Draft Join"),
+        title: const Text("Join League"),
       ),
       body: Center(
         child: Column(

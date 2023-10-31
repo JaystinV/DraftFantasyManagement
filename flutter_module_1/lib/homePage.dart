@@ -1,6 +1,7 @@
 //This has the drafts the user is in, as well as a draft join or draft create
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_module_1/dbConnect.dart';
 import 'package:flutter_module_1/draftStart.dart';
 import 'package:flutter_module_1/draftSummary.dart';
 import 'package:flutter_module_1/profilePage.dart';
@@ -17,6 +18,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 1;
+  PostgresConnection connectLeague = PostgresConnection();
+  PostgresConnection connectLeagueCount = PostgresConnection();
   List<Widget> bottomNavigation = [HomePage(), SearchPlayersPage()];
   void onIconTapped(int index) {
     setState(() {
@@ -35,6 +38,19 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<List<List<dynamic>>> getLeaguesCurrentlyIn() async {
+    List<List<dynamic>> leagues = await connectLeague.getLeagues();
+    return leagues;
+  }
+  // Future<List<List<dynamic>>> leagues = Future<List<List<dynamic>>>.delayed(
+  //   const Duration(seconds: 2), () => getLeaguesCurrentlyIn();
+  // ) ;
+
+  Future<int> getNumberOfLeagues() async {
+    List<List<dynamic>> leagues = await connectLeagueCount.getLeagues();
+    return leagues.length;
+  }
+
   @override
   Widget build(BuildContext context) {
     //place listview here with widget helper
@@ -45,65 +61,112 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => ProfilePage())),
               icon: const Icon(Icons.face_unlock_outlined))
         ]),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 575,
-                child: ListView.builder(
-                    itemCount: 16,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            ElevatedButton(
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const DraftStartPage())),
-                                child: Text('League $index')),
-                            ElevatedButton(
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => DraftSummaryPage())),
-                                style: ElevatedButton.styleFrom(
-                                  shape: const CircleBorder(),
-                                ),
-                                child: const Icon(Icons.question_mark)),
-                            ElevatedButton(
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            TeamStatisticPage())),
-                                style: ElevatedButton.styleFrom(
-                                  shape: const CircleBorder(),
-                                ),
-                                child: const Icon(Icons.person)),
-                          ]);
-                    }),
-              ),
-              Row(
+        body: FutureBuilder(
+          builder: (context, leaguesSnap) {
+            if (!leaguesSnap.hasData) {
+              return Center(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    ElevatedButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DraftSetUp())),
-                        child: const Text('Create Draft')),
-                    ElevatedButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DraftJoin())),
-                        child: const Text('Join Draft')),
-                  ]),
-            ],
-          ),
+                    const SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: CircularProgressIndicator(),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DraftSetUp())),
+                              child: const Text('Create League')),
+                          ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DraftJoin())),
+                              child: const Text('Join League')),
+                        ]),
+                  ],
+                ),
+              );
+            } else {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 575,
+                      child: ListView.builder(
+                          itemCount: 3,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  SizedBox(
+                                      width: 250,
+                                      height: 35,
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const DraftStartPage()));
+                                          },
+                                          child: Text(
+                                              "${leaguesSnap.data?[0][index][0]}"))),
+                                  ElevatedButton(
+                                      onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DraftSummaryPage())),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const CircleBorder(),
+                                      ),
+                                      child: const Icon(Icons.list)),
+                                  ElevatedButton(
+                                      onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TeamStatisticPage())),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const CircleBorder(),
+                                      ),
+                                      child: const Icon(Icons.insert_chart)),
+                                ]);
+                          }),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DraftSetUp())),
+                              child: const Text('Create League')),
+                          ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DraftJoin())),
+                              child: const Text('Join League')),
+                        ]),
+                  ],
+                ),
+              );
+            }
+          },
+          future: Future.wait([
+            //getNumberOfLeagues(),
+            getLeaguesCurrentlyIn()
+          ]),
         ),
         bottomNavigationBar: BottomNavigationBar(
           //Displays a navigation bar at the bottom of the screen
@@ -121,14 +184,5 @@ class _HomePageState extends State<HomePage> {
           selectedItemColor: Colors.blueGrey,
           onTap: onIconTapped,
         ));
-  }
-}
-
-class LeaguesCurrently extends StatelessWidget {
-  const LeaguesCurrently({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(children: <Widget>[]);
   }
 }

@@ -1,55 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_module_1/homePage.dart';
+import 'package:flutter_module_1/draftStart.dart';
 
-class DraftSetUp extends StatefulWidget {
+class TradePage extends StatefulWidget {
   @override
-  State<DraftSetUp> createState() => _DraftSetUpState();
+  State<TradePage> createState() => _TradePageState();
 }
 
-class _DraftSetUpState extends State<DraftSetUp> {
+class _TradePageState extends State<TradePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("League Create"),
+        title: const Text("Draft Trade"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Row(children: <Widget>[Text('League Name')]),
+            const Row(children: <Widget>[Text('Team Manager Round')]),
             const TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Leauge Name',
+                hintText: 'Team manager round to trade',
               ),
             ),
-            const Row(children: <Widget>[Text('Session Key')]),
+            const Row(children: <Widget>[Text('Your Round')]),
             const TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Ki3j7y',
+                hintText: 'Your round to trade',
               ),
             ),
-            const Row(children: <Widget>[Text('Rounds')]),
+            const Row(children: <Widget>[Text('Team Manager')]),
             const TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Total Rounds',
+                hintText: 'Team Manager trading',
               ),
             ),
-            const Text('Timer'),
+            const Text('You'),
             const TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Total Time',
+                hintText: 'Your Username',
               ),
             ),
-            ElevatedButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage())),
-                child: const Text('Create')),
+            ElevatedButton(onPressed: () {}, child: const Text('Request')),
           ],
         ),
       ),

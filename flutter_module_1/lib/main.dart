@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_module_1/dbConnect.dart';
 import 'package:flutter_module_1/homePage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
@@ -10,21 +11,6 @@ import 'loginPage.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
-  // final connection = PostgreSQLConnection(
-  //     'shaped-badger-13180.5xj.cockroachlabs.cloud', 26257, 'defaultdb',
-  //     username: 'justinvang_jk_gmail_',
-  //     password: 'pX0U096Ls1KhnSlwRV_QYQ');
-  // await connection.open();
-
-  // await connection.transaction((ctx) async {
-  //   await ctx.query("""
-  //   INSERT INTO public.tester (a, b)
-  //   VALUES 4, 5;
-  // """);
-  //   var result = await ctx.query("SELECT b FROM public.tester");
-  // });
-
   runApp(const MyApp());
 }
 
@@ -97,33 +83,19 @@ class _WelcomePageState extends State<WelcomePage> {
                   padding: const EdgeInsets.only(top: 500),
                   child: ElevatedButton(
                       onPressed: () {
+                        //PostgresConnection connect = PostgresConnection();
+                        //connect.initDatabaseConnection();
+                        //connect.getLeagues();
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginPage()));
-                        // final connection = PostgreSQLConnection(
-                        //     'shaped-badger-13180.5xj.cockroachlabs.cloud',
-                        //     26257,
-                        //     'defaultdb',
-                        //     username: 'justinvang_jk_gmail_',
-                        //     password: 'pX0U096Ls1KhnSlwRV_QYQ');
-                        // await connection.open();
-                        // await connection.transaction((ctx) async {
-                        //   await ctx.query("""
-                        //     INSERT INTO tester (a, b)
-                        //     VALUES 4, 5;
-                        //   """);
-                        //   var result =
-                        //       await ctx.query("SELECT b FROM public.tester");
-                        //print(result);
                         SystemChrome.setPreferredOrientations(
                             [DeviceOrientation.portraitUp]);
-                        //});
                       },
                       child: Text('Login',
                           style: GoogleFonts.roboto(
                             textStyle: const TextStyle(color: Colors.white),
-                            //fontWeight: FontWeight.bold,
                             fontSize: 45,
                           ))))
             ],
