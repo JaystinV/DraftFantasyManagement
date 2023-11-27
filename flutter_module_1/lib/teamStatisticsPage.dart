@@ -13,31 +13,7 @@ class TeamStatisticPage extends StatefulWidget {
 }
 
 class _TeamStatisticPage extends State<TeamStatisticPage> {
-  int selectedIndex = 2;
-  List<Widget> bottomNavigation = [
-    SearchPlayersPage(),
-    HomePage(),
-    const TeamStatisticPage()
-  ];
-  void onIconTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-      if (selectedIndex == 1) {
-        //NavigationBar
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomePage();
-        }));
-      } else if (selectedIndex == 0) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return SearchPlayersPage();
-        }));
-      } else if (selectedIndex == 2) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return TeamStatisticPage();
-        }));
-      }
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {

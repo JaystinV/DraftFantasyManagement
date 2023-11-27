@@ -11,7 +11,7 @@ class _DraftUpdateState extends State<DraftUpdate> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Draft Create"),
+        title: const Text("Draft Update"),
       ),
       body: Center(
         child: Column(

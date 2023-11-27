@@ -25,6 +25,13 @@ class _SignupPageState extends State<SignupPage> {
                   hintText: 'Enter your email',
                 ),
               ),
+              const Row(children: <Widget>[Text('Username')]),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your username',
+                ),
+              ),
               const Row(children: <Widget>[Text('Password')]),
               const TextField(
                 decoration: InputDecoration(
@@ -41,7 +48,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
               ElevatedButton(
                   onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage())),
+                      MaterialPageRoute(builder: (context) => HomePage(userLoggedIn: "", newLeagueName: "", newRounds: 0))), //change later
                   child: const Text('Sign-Up')),
             ])));
   }

@@ -14,26 +14,26 @@ void main() {
   runApp(const MyApp());
 }
 
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const WelcomePage(
-          title: 'HAHA',
-        );
-      },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'home',
-          builder: (BuildContext context, GoRouterState state) {
-            return HomePage();
-          },
-        ),
-      ],
-    ),
-  ],
-);
+// final GoRouter _router = GoRouter(
+//   routes: <RouteBase>[
+//     GoRoute(
+//       path: '/',
+//       builder: (BuildContext context, GoRouterState state) {
+//         return const WelcomePage(
+//           title: 'HAHA',
+//         );
+//       },
+//       routes: <RouteBase>[
+//         GoRoute(
+//           path: 'home',
+//           builder: (BuildContext context, GoRouterState state) {
+//             return HomePage();
+//           },
+//         ),
+//       ],
+//     ),
+//   ],
+// );
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -83,8 +83,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   padding: const EdgeInsets.only(top: 500),
                   child: ElevatedButton(
                       onPressed: () {
-                        //PostgresConnection connect = PostgresConnection();
-                        //connect.initDatabaseConnection();
+                        PostgresConnection connect = PostgresConnection();
+                        connect.initDatabaseConnection();
                         //connect.getLeagues();
                         Navigator.push(
                             context,

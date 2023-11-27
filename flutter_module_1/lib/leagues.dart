@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Leagues {
+class Leagues extends ChangeNotifier{
   int id;
   String leagueName;
 
